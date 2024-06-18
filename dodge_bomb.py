@@ -18,13 +18,13 @@ def look():  # 飛ぶ方向
     
     return{
     (-5, 0): kk_img,  # 0
-    (-5, +5): pg.transform.rotozoom(kk_img, 45, 2.0),  # 45
-    (0, +5): pg.transform.rotozoom(kk_img2, -90, 2.0),  # 90tf
-    (+5, +5): pg.transform.rotozoom(kk_img2, -50, 2.0),  # 45tf
+    (-5, +5): pg.transform.rotozoom(kk_img, 45, 1.0),  # 45
+    (0, +5): pg.transform.rotozoom(kk_img2, -90, 1.0),  # 90tf
+    (+5, +5): pg.transform.rotozoom(kk_img2, -50, 1.0),  # 45tf
     (+5, 0): kk_img2,  # 0tf
-    (+5, -5): pg.transform.rotozoom(kk_img2, 50, 2.0),  # -45tf
-    (0, -5): pg.transform.rotozoom(kk_img2, 90, 2.0),  # -90ft
-    (-5, -5): pg.transform.rotozoom(kk_img, -45, 2.0),  # -45
+    (+5, -5): pg.transform.rotozoom(kk_img2, 50, 1.0),  # -45tf
+    (0, -5): pg.transform.rotozoom(kk_img2, 90, 1.0),  # -90ft
+    (-5, -5): pg.transform.rotozoom(kk_img, -45, 1.0),  # -45
     (0, 0): kk_img
     }
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
