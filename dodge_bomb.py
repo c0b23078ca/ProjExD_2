@@ -4,7 +4,7 @@ import random
 import pygame as pg
 
 
-WIDTH, HEIGHT = 1200, 700
+WIDTH, HEIGHT = 1300, 700 
 DELTA = {  # 移動量辞書
     pg.K_UP: (0, -5),
     pg.K_DOWN: (0, +5),
@@ -12,6 +12,20 @@ DELTA = {  # 移動量辞書
     pg.K_RIGHT: (+5, 0),
     }
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+
+def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
+    """
+    引数：こうかとんRectか爆弾Rect
+    戻り値：真理値タプル（横方向、縦方向）
+    画面内ならTrue/画面外ならFalse
+    """
+    yoko, tate = True, True
+    if rct.left < 0 or WIDTH < rct.right:  # 横の判定
+        yoko = False
+    if rct.top < 0 or HEIGHT < rct.bottom:  # 縦の判定
+        tate = False
+    return yoko, tate
 
 
 def main():
@@ -42,8 +56,19 @@ def main():
                 sum_mv[0] += v[0]
                 sum_mv[1] += v[1]
         kk_rct.move_ip(sum_mv)
+        if check_bound(kk_rct) != (True, True):
+            kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
+        if kk_rct.colliderect(bomb_rct):  # 衝突判定
+            return  # ゲームオーバー
         screen.blit(kk_img, kk_rct)
+        
+        
         bomb_rct.move_ip(vx, vy)
+        yoko, tate = check_bound(bomb_rct)
+        if not yoko:  # 横方向にはみ出たら
+            vx *= -1
+        if not tate:  # 縦方向にはみ出たら
+            vy *= -1
         screen.blit(bomb_img, bomb_rct)
         pg.display.update()
         tmr += 1
