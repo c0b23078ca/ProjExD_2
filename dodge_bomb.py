@@ -1,9 +1,10 @@
 import os
 import sys
+import random
 import pygame as pg
 
 
-WIDTH, HEIGHT = 1600, 900
+WIDTH, HEIGHT = 1200, 700
 DELTA = {  # 移動量辞書
     pg.K_UP: (0, -5),
     pg.K_DOWN: (0, +5),
@@ -20,6 +21,12 @@ def main():
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 2.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
+    bomb_img = pg.Surface((20, 20))  # 一辺が20のSufaceを作る 
+    bomb_img.set_colorkey((0, 0, 0))
+    pg.draw.circle(bomb_img, (255, 0, 0), (10, 10), 10)  #
+    bomb_rct = bomb_img.get_rect()
+    bomb_rct.center  = random.randint(0, WIDTH), random.randint(0, HEIGHT) 
+    vx, vy = +5, +5
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -36,6 +43,8 @@ def main():
                 sum_mv[1] += v[1]
         kk_rct.move_ip(sum_mv)
         screen.blit(kk_img, kk_rct)
+        bomb_rct.move_ip(vx, vy)
+        screen.blit(bomb_img, bomb_rct)
         pg.display.update()
         tmr += 1
         clock.tick(50)
